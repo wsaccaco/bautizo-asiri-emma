@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bautizo de Asiri y Emma | 1 de Agosto 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           RESET Y VARIABLES
+           ═══════════════════════════════════════════════════════════════ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fondo-principal: #fdf8f3;
+            --hero-start: #fff5f0;
+            --hero-mid: #fdf0e8;
+            --hero-end: #f8eae0;
+            --color-principal: #c9956a;
+            --color-oscuro: #3d2c1e;
+            --texto-secundario: #9a7055;
+            --bordes: #e8d5c4;
+            --tarjetas: #ffffff;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Josefin Sans', 'Segoe UI', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--fondo-principal);
+            color: var(--color-oscuro);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ANIMACIONES
+           ═══════════════════════════════════════════════════════════════ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pinBounce {
+            0%, 100% {
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                transform: scale(1.1) translateY(-4px);
+            }
+        }
+
+        @keyframes dashMove {
+            0% {
+                stroke-dashoffset: 20;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes rotateSlow {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            50% {
+                transform: translateY(6px) translateX(-50%);
+            }
+        }
+
+        @keyframes carMove {
+            0% {
+                offset-distance: 0%;
+            }
+            100% {
+                offset-distance: 100%;
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECCIÓN HERO
+           ═══════════════════════════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--hero-start) 0%, var(--hero-mid) 50%, var(--hero-end) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        /* Contenedor de pétalos */
+        .petals-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(ellipse at 30% 30%, #f8c8c8 0%, #e8a0a0 50%, #d4888e 100%);
+            border-radius: 50% 0 50% 50%;
+            opacity: 0;
+            animation: fall linear infinite;
+            filter: blur(0.5px);
+        }
+
+        /* Ornamentos decorativos en esquinas */
+        .ornament {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            z-index: 2;
+            opacity: 0.3;
+        }
+
+        .ornament-tl {
+            top: 20px;
+            left: 20px;
+        }
+
+        .ornament-tr {
+            top: 20px;
+            right: 20px;
+            transform: scaleX(-1);
+        }
+
+        .ornament-bl {
+            bottom: 20px;
+            left: 20px;
+            transform: scaleY(-1);
+        }
+
+        .ornament-br {
+            bottom: 20px;
+            right: 20px;
+            transform: scale(-1);
+        }
+
+        .ornament svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--color-principal);
+        }
+
+        /* Elemento floral rotativo */
+        .floral-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            transform: translate(-50%, -50%);
+            opacity: 0.06;
+            z-index: 0;
+            animation: rotateSlow 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .floral-spinner svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--color-principal);
+        }
+
+        /* Contenido del hero */
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--texto-secundario);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        .hero-names {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 600;
+            font-style: italic;
+            color: var(--color-oscuro);
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.4s;
+        }
+
+        .hero-names .ampersand {
+            font-weight: 400;
+            color: var(--color-principal);
+            display: inline-block;
+            margin: 0 0.2em;
+        }
+
+        .hero-divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-principal), transparent);
+            margin: 1.5rem auto;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        .hero-event {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--color-principal);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.8s;
+        }
+
+        .hero-date {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 500;
+            color: var(--color-oscuro);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .hero-time {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--texto-secundario);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 1.2s;
+        }
+
+        .hero-church {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--color-oscuro);
+            opacity: 0;
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 1.4s;
+        }
+
+        /* Indicador scroll */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--texto-secundario);
+            margin-bottom: 8px;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--color-principal);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECCIÓN PADRINOS Y FAMILIA
+           ═══════════════════════════════════════════════════════════════ */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            font-style: italic;
+            text-align: center;
+            color: var(--color-oscuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--texto-secundario);
+            margin-bottom: 3rem;
+        }
+
+        .padrinos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .padrino-card {
+            background: var(--tarjetas);
+            border: 1px solid var(--bordes);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .padrino-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-principal), #d4a574);
+        }
+
+        .padrino-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(201, 149, 106, 0.15);
+        }
+
+        .padrino-card-label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-principal);
+            margin-bottom: 0.5rem;
+        }
+
+        .padrino-card-name {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--color-oscuro);
+            margin-bottom: 1.5rem;
+        }
+
+        .padrino-item {
+            margin-bottom: 1rem;
+        }
+
+        .padrino-role {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--texto-secundario);
+            margin-bottom: 0.25rem;
+        }
+
+        .padrino-person {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--color-oscuro);
+        }
+
+        /* Sección padres */
+        .padres-card {
+            background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-end) 100%);
+            border: 2px solid var(--color-principal);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .padres-card::before,
+        .padres-card::after {
+            content: '❦';
+            position: absolute;
+            font-size: 1.5rem;
+            color: var(--color-principal);
+            opacity: 0.5;
+        }
+
+        .padres-card::before {
+            top: 1rem;
+            left: 1.5rem;
+        }
+
+        .padres-card::after {
+            bottom: 1rem;
+            right: 1.5rem;
+        }
+
+        .padres-label {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-principal);
+            margin-bottom: 1rem;
+        }
+
+        .padres-names {
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 4vw, 1.6rem);
+            font-weight: 500;
+            color: var(--color-oscuro);
+            line-height: 1.8;
+        }
+
+        .padres-names .ampersand {
+            display: block;
+            font-style: italic;
+            color: var(--color-principal);
+            font-size: 1.2rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECCIÓN PROGRAMA
+           ═══════════════════════════════════════════════════════════════ */
+        .programa-section {
+            background: linear-gradient(180deg, var(--fondo-principal) 0%, var(--hero-end) 100%);
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 0 1 200px;
+            position: relative;
+        }
+
+        .timeline-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--tarjetas);
+            border: 2px solid var(--color-principal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-icon {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(201, 149, 106, 0.25);
+        }
+
+        .timeline-time {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-principal);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-oscuro);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-place {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--texto-secundario);
+            max-width: 180px;
+        }
+
+        .timeline-connector {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 60px;
+            padding-top: 35px;
+        }
+
+        .timeline-connector svg {
+            width: 40px;
+            height: 20px;
+            stroke: var(--color-principal);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-connector {
+                display: flex;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECCIÓN CROQUIS
+           ═══════════════════════════════════════════════════════════════ */
+        .croquis-section {
+            background: var(--tarjetas);
+            border-top: 1px solid var(--bordes);
+            border-bottom: 1px solid var(--bordes);
+        }
+
+        .croquis-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .croquis-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .croquis-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--texto-secundario);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.iglesia {
+            background: #c9956a;
+        }
+
+        .legend-dot.salon {
+            background: #7a9e7a;
+        }
+
+        /* Botones de Google Maps */
+        .map-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .map-btn-iglesia {
+            background: var(--color-principal);
+            color: white;
+        }
+
+        .map-btn-iglesia:hover {
+            background: #b8855a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 149, 106, 0.35);
+        }
+
+        .map-btn-salon {
+            background: #7a9e7a;
+            color: white;
+        }
+
+        .map-btn-salon:hover {
+            background: #6a8e6a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(122, 158, 122, 0.35);
+        }
+
+        .map-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Animación del pin */
+        .map-pin {
+            animation: pinBounce 2s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        /* Ruta animada */
+        .route-path {
+            stroke-dasharray: 10, 5;
+            animation: dashMove 2s linear infinite;
+        }
+
+        /* Auto animado */
+        .car-icon {
+            offset-path: path('M 200 280 Q 280 280 320 220 Q 360 160 450 160 Q 540 160 580 180');
+            animation: carMove 4s linear infinite;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECCIÓN RSVP
+           ═══════════════════════════════════════════════════════════════ */
+        .rsvp-section {
+            background: linear-gradient(180deg, var(--hero-end) 0%, var(--fondo-principal) 100%);
+        }
+
+        .rsvp-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .rsvp-form {
+            background: var(--tarjetas);
+            border: 1px solid var(--bordes);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(61, 44, 30, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--texto-secundario);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--color-oscuro);
+            background: var(--fondo-principal);
+            border: 1px solid var(--bordes);
+            border-radius: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-principal);
+            box-shadow: 0 0 0 3px rgba(201, 149, 106, 0.15);
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239a7055' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Contador de personas */
+        .counter-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .counter-btn {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--color-principal);
+            background: transparent;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--color-principal);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .counter-btn:hover {
+            background: var(--color-principal);
+            color: white;
+        }
+
+        .counter-btn:active {
+            transform: scale(0.95);
+        }
+
+        .counter-value {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-oscuro);
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .counter-label {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--texto-secundario);
+        }
+
+        /* Botón de confirmación */
+        .btn-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: white;
+            background: linear-gradient(135deg, var(--color-principal) 0%, #d4a574 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(201, 149, 106, 0.35);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .btn-submit:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #7a9e7a 0%, #8fb58f 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 1.5rem;
+            animation: successPop 0.5s ease forwards;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-text {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+        .footer {
+            background: var(--color-oscuro);
+            color: #e8d5c4;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .footer-names {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 600;
+            font-style: italic;
+            color: var(--color-principal);
+            margin-bottom: 1rem;
+        }
+
+        .footer-names .ampersand {
+            color: #e8d5c4;
+            font-weight: 400;
+        }
+
+        .footer-parents {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--color-principal);
+            margin: 1.5rem auto;
+            opacity: 0.5;
+        }
+
+        .footer-date {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-location {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .footer-heart {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .ornament {
+                width: 80px;
+                height: 80px;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+            }
+
+            .padrino-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .rsvp-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .timeline-item {
+                flex: 0 1 100%;
+            }
+
+            .timeline-connector {
+                display: none;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SECCIÓN MENSAJE ESPIRITUAL
+           ═══════════════════════════════════════════════════════════════ */
+        .mensaje-section {
+            background: linear-gradient(180deg, var(--hero-end) 0%, var(--fondo-principal) 50%, var(--hero-end) 100%);
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mensaje-section::before,
+        .mensaje-section::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(201, 149, 106, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .mensaje-section::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        .mensaje-section::after {
+            bottom: -50px;
+            right: -50px;
+        }
+
+        .mensaje-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mensaje-verso {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--color-oscuro);
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        .mensaje-cita {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            color: var(--color-principal);
+            margin-bottom: 2.5rem;
+        }
+
+        .mensaje-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .mensaje-divider-line {
+            width: 60px;
+            height: 1px;
+            background: var(--color-principal);
+            opacity: 0.4;
+        }
+
+        .mensaje-divider-icon {
+            color: var(--color-principal);
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        .mensaje-texto {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--color-oscuro);
+            line-height: 2;
+            margin-bottom: 2.5rem;
+            white-space: pre-line;
+        }
+
+        .mensaje-firma {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--texto-secundario);
+            margin-bottom: 0.5rem;
+        }
+
+        .mensaje-padres {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--color-principal);
+        }
+
+        .mensaje-flor {
+            margin-top: 2rem;
+            font-size: 2rem;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECCIÓN HERO
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="hero">
+        <!-- Contenedor de pétalos (generados por JS) -->
+        <div class="petals-container" id="petals"></div>
+
+        <!-- Ornamentos decorativos en esquinas -->
+        <div class="ornament ornament-tl">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,90 Q10,10 90,10 Q60,10 50,30 Q40,50 50,70 Q60,90 90,90 Q10,90 10,90 Z" opacity="0.5"/>
+                <circle cx="25" cy="25" r="8" opacity="0.3"/>
+                <circle cx="45" cy="15" r="5" opacity="0.2"/>
+                <path d="M15,50 Q30,40 45,50 Q30,60 15,50 Z" opacity="0.4"/>
+            </svg>
+        </div>
+        <div class="ornament ornament-tr">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,90 Q10,10 90,10 Q60,10 50,30 Q40,50 50,70 Q60,90 90,90 Q10,90 10,90 Z" opacity="0.5"/>
+                <circle cx="25" cy="25" r="8" opacity="0.3"/>
+                <circle cx="45" cy="15" r="5" opacity="0.2"/>
+                <path d="M15,50 Q30,40 45,50 Q30,60 15,50 Z" opacity="0.4"/>
+            </svg>
+        </div>
+        <div class="ornament ornament-bl">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,90 Q10,10 90,10 Q60,10 50,30 Q40,50 50,70 Q60,90 90,90 Q10,90 10,90 Z" opacity="0.5"/>
+                <circle cx="25" cy="25" r="8" opacity="0.3"/>
+                <circle cx="45" cy="15" r="5" opacity="0.2"/>
+                <path d="M15,50 Q30,40 45,50 Q30,60 15,50 Z" opacity="0.4"/>
+            </svg>
+        </div>
+        <div class="ornament ornament-br">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,90 Q10,10 90,10 Q60,10 50,30 Q40,50 50,70 Q60,90 90,90 Q10,90 10,90 Z" opacity="0.5"/>
+                <circle cx="25" cy="25" r="8" opacity="0.3"/>
+                <circle cx="45" cy="15" r="5" opacity="0.2"/>
+                <path d="M15,50 Q30,40 45,50 Q30,60 15,50 Z" opacity="0.4"/>
+            </svg>
+        </div>
+
+        <!-- Elemento floral rotativo de fondo -->
+        <div class="floral-spinner">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(100,100)">
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(30)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(60)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(90)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(120)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(150)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(180)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(210)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(240)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(270)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(300)"/>
+                    <path d="M0,-80 Q20,-60 0,-40 Q-20,-60 0,-80 Z" transform="rotate(330)"/>
+                    <circle cx="0" cy="0" r="15"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="hero-content">
+            <p class="hero-subtitle">Celebramos el bautizo de</p>
+            <h1 class="hero-names">Asiri <span class="ampersand">&</span> Emma</h1>
+            <div class="hero-divider"></div>
+            <p class="hero-event">Santa Celebración</p>
+            <p class="hero-date">1 de Agosto del 2026</p>
+            <p class="hero-time">12:00 pm</p>
+            <p class="hero-church">Iglesia Santiago Apóstol de Talavera</p>
+        </div>
+
+        <!-- Indicador de scroll -->
+        <div class="scroll-indicator">
+            <span>Desliza</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECCIÓN MENSAJE ESPIRITUAL
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="mensaje-section">
+        <div class="mensaje-container">
+            <p class="mensaje-verso">
+                Toda buena dádiva<br>
+                y todo don perfecto<br>
+                desciende de lo alto.
+            </p>
+            <p class="mensaje-cita">— Santiago 1:17</p>
+
+            <div class="mensaje-divider">
+                <span class="mensaje-divider-line"></span>
+                <span class="mensaje-divider-icon">✝</span>
+                <span class="mensaje-divider-line"></span>
+            </div>
+
+            <p class="mensaje-texto">Cuando Dios forma una vida,
+la llena de propósito, de gracia
+y de un amor que ninguna palabra
+alcanza a describir del todo.
+
+Hoy dos pequeñas almas
+son presentadas ante Él,
+cubiertas por Su luz
+y rodeadas del amor
+de quienes las esperaban.
+
+Asiri y Emma comienzan hoy
+un camino sellado por la fe,
+y nos sentimos bendecidos
+de tenerlos a ustedes
+acompañándonos en este momento
+tan sagrado y tan nuestro.
+
+Gracias por ser parte
+de esta historia que Dios escribió
+con tanto amor.</p>
+
+            <p class="mensaje-firma">Con el corazón lleno,</p>
+            <p class="mensaje-padres">Karlita y Waldo</p>
+
+            <div class="mensaje-flor">❀</div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECCIÓN PADRINOS Y FAMILIA
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="section">
+        <h2 class="section-title">Padrinos & Familia</h2>
+        <p class="section-subtitle">Quienes nos acompañan en este día especial</p>
+
+        <div class="padrinos-grid">
+            <!-- Tarjeta Asiri -->
+            <div class="padrino-card">
+                <p class="padrino-card-label">Padrinos de</p>
+                <h3 class="padrino-card-name">Asiri</h3>
+                <div class="padrino-item">
+                    <p class="padrino-role">Madrina</p>
+                    <p class="padrino-person">Sharon Pérez Zevallos</p>
+                </div>
+                <div class="padrino-item">
+                    <p class="padrino-role">Padrino</p>
+                    <p class="padrino-person">Alfonso Gocht Guerrero</p>
+                </div>
+            </div>
+
+            <!-- Tarjeta Emma -->
+            <div class="padrino-card">
+                <p class="padrino-card-label">Padrinos de</p>
+                <h3 class="padrino-card-name">Emma</h3>
+                <div class="padrino-item">
+                    <p class="padrino-role">Madrina</p>
+                    <p class="padrino-person">Lizeth Saccaco Cárdenas</p>
+                </div>
+                <div class="padrino-item">
+                    <p class="padrino-role">Padrino</p>
+                    <p class="padrino-person">Henry Huaraca Flores</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de los padres -->
+        <div class="padres-card">
+            <p class="padres-label">Con el amor de sus padres</p>
+            <p class="padres-names">
+                Karlita Vásquez Pérez
+                <span class="ampersand">&</span>
+                Waldo Saccaco Cárdenas
+            </p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECCIÓN PROGRAMA DEL DÍA
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="section programa-section">
+        <h2 class="section-title">Programa del Día</h2>
+        <p class="section-subtitle">Momentos que compartiremos juntos</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon">⛪</div>
+                <p class="timeline-time">12:00 PM</p>
+                <h3 class="timeline-title">Santa Misa</h3>
+                <p class="timeline-place">Iglesia Santiago Apóstol de Talavera</p>
+            </div>
+
+            <div class="timeline-connector">
+                <svg viewBox="0 0 40 20">
+                    <path d="M0,10 L30,10" stroke-dasharray="4,2"/>
+                    <polyline points="25,5 35,10 25,15"/>
+                </svg>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon">🚗</div>
+                <p class="timeline-time">1:30 PM</p>
+                <h3 class="timeline-title">Traslado</h3>
+                <p class="timeline-place">Nos dirigimos al lugar de la celebración</p>
+            </div>
+
+            <div class="timeline-connector">
+                <svg viewBox="0 0 40 20">
+                    <path d="M0,10 L30,10" stroke-dasharray="4,2"/>
+                    <polyline points="25,5 35,10 25,15"/>
+                </svg>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon">🎉</div>
+                <p class="timeline-time">2:00 PM</p>
+                <h3 class="timeline-title">Recepción</h3>
+                <p class="timeline-place">Salón de Eventos La Florida</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECCIÓN CROQUIS ANIMADO
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="section croquis-section">
+        <h2 class="section-title">Cómo Llegar</h2>
+        <p class="section-subtitle">Talavera, Andahuaylas, Perú</p>
+
+        <div class="croquis-container">
+            <svg class="croquis-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Fondo del mapa -->
+                <rect width="800" height="400" fill="#f5efe8"/>
+
+                <!-- Cuadrícula de calles -->
+                <g stroke="#e8d5c4" stroke-width="1" fill="none">
+                    <!-- Calles horizontales -->
+                    <line x1="50" y1="100" x2="750" y2="100"/>
+                    <line x1="50" y1="200" x2="750" y2="200"/>
+                    <line x1="50" y1="300" x2="750" y2="300"/>
+
+                    <!-- Calles verticales -->
+                    <line x1="150" y1="50" x2="150" y2="350"/>
+                    <line x1="300" y1="50" x2="300" y2="350"/>
+                    <line x1="450" y1="50" x2="450" y2="350"/>
+                    <line x1="600" y1="50" x2="600" y2="350"/>
+                </g>
+
+                <!-- Calle principal (más ancha) -->
+                <path d="M100 280 Q200 280 250 250 Q300 220 380 200 Q460 180 520 180 Q600 180 680 200"
+                      stroke="#d4c4b0" stroke-width="20" fill="none" stroke-linecap="round"/>
+
+                <!-- Ruta punteada animada -->
+                <path class="route-path"
+                      d="M200 280 Q280 280 320 220 Q360 160 450 160 Q540 160 580 180"
+                      stroke="#c9956a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+                <!-- Manzanas / Edificios -->
+                <g fill="#e8ddd0">
+                    <rect x="80" y="120" width="50" height="60" rx="3"/>
+                    <rect x="170" y="120" width="100" height="60" rx="3"/>
+                    <rect x="320" y="80" width="80" height="50" rx="3"/>
+                    <rect x="500" y="80" width="70" height="50" rx="3"/>
+                    <rect x="620" y="100" width="90" height="60" rx="3"/>
+                    <rect x="80" y="220" width="60" height="50" rx="3"/>
+                    <rect x="320" y="240" width="90" height="50" rx="3"/>
+                    <rect x="500" y="220" width="60" height="60" rx="3"/>
+                    <rect x="620" y="230" width="80" height="50" rx="3"/>
+                </g>
+
+                <!-- Árboles decorativos -->
+                <g fill="#9cb89c">
+                    <circle cx="100" cy="330" r="12"/>
+                    <circle cx="140" cy="340" r="10"/>
+                    <circle cx="400" cy="330" r="14"/>
+                    <circle cx="440" cy="340" r="11"/>
+                    <circle cx="700" cy="320" r="13"/>
+                </g>
+
+                <!-- Plaza (cerca de la iglesia) -->
+                <rect x="160" y="250" width="80" height="60" fill="#c5d5c0" rx="5"/>
+                <circle cx="200" cy="280" r="15" fill="#9cb89c"/>
+
+                <!-- IGLESIA -->
+                <g transform="translate(200, 280)">
+                    <!-- Edificio de la iglesia -->
+                    <rect x="-25" y="-45" width="50" height="40" fill="#d4a574" rx="2"/>
+                    <polygon points="0,-60 -30,-45 30,-45" fill="#c9956a"/>
+                    <rect x="-5" y="-35" width="10" height="15" fill="#8b7355"/>
+                    <circle cx="0" cy="-50" r="5" fill="#f5efe8"/>
+                    <!-- Cruz -->
+                    <line x1="0" y1="-70" x2="0" y2="-58" stroke="#3d2c1e" stroke-width="3"/>
+                    <line x1="-6" y1="-65" x2="6" y2="-65" stroke="#3d2c1e" stroke-width="3"/>
+                </g>
+
+                <!-- Pin Iglesia (animado) -->
+                <g class="map-pin" transform="translate(200, 200)">
+                    <ellipse cx="0" cy="30" rx="12" ry="4" fill="rgba(201,149,106,0.3)"/>
+                    <path d="M0,25 C-15,10 -15,-10 0,-20 C15,-10 15,10 0,25 Z" fill="#c9956a"/>
+                    <circle cx="0" cy="-5" r="7" fill="#fff5f0"/>
+                    <text x="0" y="-2" text-anchor="middle" font-size="10" fill="#c9956a">⛪</text>
+                </g>
+
+                <!-- SALÓN LA FLORIDA -->
+                <g transform="translate(580, 180)">
+                    <!-- Edificio del salón -->
+                    <rect x="-35" y="-30" width="70" height="45" fill="#7a9e7a" rx="3"/>
+                    <rect x="-25" y="-20" width="15" height="20" fill="#5a7e5a"/>
+                    <rect x="-5" y="-20" width="15" height="20" fill="#5a7e5a"/>
+                    <rect x="15" y="-20" width="15" height="20" fill="#5a7e5a"/>
+                    <rect x="-35" y="-35" width="70" height="8" fill="#6a8e6a"/>
+                    <!-- Banderines -->
+                    <line x1="-30" y1="-40" x2="30" y2="-40" stroke="#d4a574" stroke-width="1"/>
+                    <polygon points="-25,-40 -20,-35 -15,-40" fill="#f8c8c8"/>
+                    <polygon points="-10,-40 -5,-35 0,-40" fill="#c9d5f8"/>
+                    <polygon points="5,-40 10,-35 15,-40" fill="#f8e8c8"/>
+                    <polygon points="20,-40 25,-35 30,-40" fill="#c8f8d8"/>
+                </g>
+
+                <!-- Pin Salón (animado) -->
+                <g class="map-pin" transform="translate(580, 100)" style="animation-delay: 0.5s;">
+                    <ellipse cx="0" cy="30" rx="12" ry="4" fill="rgba(122,158,122,0.3)"/>
+                    <path d="M0,25 C-15,10 -15,-10 0,-20 C15,-10 15,10 0,25 Z" fill="#7a9e7a"/>
+                    <circle cx="0" cy="-5" r="7" fill="#f0fff0"/>
+                    <text x="0" y="-2" text-anchor="middle" font-size="10" fill="#7a9e7a">🎉</text>
+                </g>
+
+                <!-- Auto animado -->
+                <g class="car-icon">
+                    <rect x="-12" y="-6" width="24" height="12" fill="#c9956a" rx="3"/>
+                    <rect x="-8" y="-10" width="14" height="6" fill="#d4b896" rx="2"/>
+                    <circle cx="-6" cy="6" r="4" fill="#3d2c1e"/>
+                    <circle cx="6" cy="6" r="4" fill="#3d2c1e"/>
+                    <circle cx="-6" cy="6" r="2" fill="#666"/>
+                    <circle cx="6" cy="6" r="2" fill="#666"/>
+                </g>
+
+                <!-- Etiquetas de lugares -->
+                <g font-family="'Josefin Sans', sans-serif" font-size="11" fill="#3d2c1e">
+                    <text x="200" y="340" text-anchor="middle" font-weight="500">Iglesia Santiago Apóstol</text>
+                    <text x="580" y="240" text-anchor="middle" font-weight="500">Salón La Florida</text>
+                </g>
+
+                <!-- Etiquetas de calles -->
+                <g font-family="'Josefin Sans', sans-serif" font-size="9" fill="#9a7055" font-style="italic">
+                    <text x="400" y="95" text-anchor="middle">Av. Principal</text>
+                    <text x="400" y="195" text-anchor="middle">Jr. Central</text>
+                    <text x="145" y="180" text-anchor="end" transform="rotate(-90, 145, 180)">Jr. Lima</text>
+                    <text x="455" y="180" text-anchor="end" transform="rotate(-90, 455, 180)">Jr. Talavera</text>
+                </g>
+
+                <!-- Indicador de Norte -->
+                <g transform="translate(730, 60)">
+                    <circle cx="0" cy="0" r="25" fill="#fff" stroke="#e8d5c4" stroke-width="1"/>
+                    <polygon points="0,-18 -6,8 0,2 6,8" fill="#c9956a"/>
+                    <polygon points="0,18 -6,-8 0,-2 6,-8" fill="#e8d5c4"/>
+                    <text x="0" y="-6" text-anchor="middle" font-family="'Josefin Sans', sans-serif" font-size="10" font-weight="600" fill="#3d2c1e">N</text>
+                </g>
+
+                <!-- Marco decorativo -->
+                <rect x="5" y="5" width="790" height="390" fill="none" stroke="#e8d5c4" stroke-width="2" rx="10"/>
+            </svg>
+
+            <div class="croquis-legend">
+                <div class="legend-item">
+                    <div class="legend-dot iglesia"></div>
+                    <span>Iglesia Santiago Apóstol</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot salon"></div>
+                    <span>Salón La Florida</span>
+                </div>
+            </div>
+
+            <div class="map-buttons">
+                <a href="https://www.google.com/maps/place/IGLESIA+SANTIAGO+APOSTOL+DE+TALAVERA/@-13.6537749,-73.4283578,17z" target="_blank" class="map-btn map-btn-iglesia">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Cómo llegar a la Iglesia
+                </a>
+                <a href="https://www.google.com/maps/place/Sal%C3%B3n+de+Eventos+la+Florida/@-13.6517124,-73.4253622,17z" target="_blank" class="map-btn map-btn-salon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Cómo llegar al Salón
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECCIÓN RSVP
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="section rsvp-section">
+        <h2 class="section-title">Confirma tu Asistencia</h2>
+        <p class="section-subtitle">Tu presencia es muy importante para nosotros</p>
+
+        <div class="rsvp-container">
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label class="form-label" for="nombre">Nombre completo</label>
+                    <input type="text" class="form-input" id="nombre" placeholder="Escribe tu nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">¿Cuántos son en tu familia?</label>
+                    <div class="counter-container">
+                        <button type="button" class="counter-btn" id="btnMinus">−</button>
+                        <span class="counter-value" id="counterValue">1</span>
+                        <button type="button" class="counter-btn" id="btnPlus">+</button>
+                        <span class="counter-label">persona(s)</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="mensaje">Mensaje para los papás (opcional)</label>
+                    <textarea class="form-textarea" id="mensaje" placeholder="Escribe un mensaje especial..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Confirmar Asistencia</button>
+
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">✨</div>
+                    <p class="success-text">¡Gracias por confirmar! Te esperamos con mucho cariño.</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+        <h2 class="footer-names">Asiri <span class="ampersand">&</span> Emma</h2>
+        <p class="footer-parents">Con amor, Karlita & Waldo</p>
+        <div class="footer-divider"></div>
+        <p class="footer-date">1 de Agosto del 2026</p>
+        <p class="footer-location">Talavera, Andahuaylas, Perú</p>
+        <div class="footer-heart">♥</div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // GENERADOR DE PÉTALOS
+        // ═══════════════════════════════════════════════════════════════
+        (function createPetals() {
+            const container = document.getElementById('petals');
+            const petalCount = 20; // Mínimo 18 pétalos
+            const colors = [
+                'radial-gradient(ellipse at 30% 30%, #f8c8c8 0%, #e8a0a0 50%, #d4888e 100%)',
+                'radial-gradient(ellipse at 30% 30%, #f8d8c8 0%, #e8b8a0 50%, #d4a088 100%)',
+                'radial-gradient(ellipse at 30% 30%, #f8e8d8 0%, #e8d0b8 50%, #d4b8a0 100%)',
+                'radial-gradient(ellipse at 30% 30%, #ffe8e8 0%, #f0c8c8 50%, #e0a8a8 100%)'
+            ];
+
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+
+                // Propiedades aleatorias
+                const size = Math.random() * 15 + 12; // 12-27px
+                const left = Math.random() * 100; // 0-100%
+                const delay = Math.random() * 8; // 0-8s delay
+                const duration = Math.random() * 6 + 8; // 8-14s duration
+                const colorIndex = Math.floor(Math.random() * colors.length);
+
+                petal.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${left}%;
+                    background: ${colors[colorIndex]};
+                    animation-delay: ${delay}s;
+                    animation-duration: ${duration}s;
+                    transform: rotate(${Math.random() * 360}deg);
+                `;
+
+                container.appendChild(petal);
+            }
+        })();
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONTADOR DE PERSONAS
+        // ═══════════════════════════════════════════════════════════════
+        const counterValue = document.getElementById('counterValue');
+        const btnMinus = document.getElementById('btnMinus');
+        const btnPlus = document.getElementById('btnPlus');
+        let count = 1;
+
+        btnMinus.addEventListener('click', () => {
+            if (count > 1) {
+                count--;
+                counterValue.textContent = count;
+            }
+        });
+
+        btnPlus.addEventListener('click', () => {
+            if (count < 20) {
+                count++;
+                counterValue.textContent = count;
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // SISTEMA RSVP CON FORMSPREE
+        // ═══════════════════════════════════════════════════════════════
+        const rsvpForm = document.getElementById('rsvpForm');
+        const successMessage = document.getElementById('successMessage');
+        const btnSubmit = document.querySelector('.btn-submit');
+
+        rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+
+            if (!nombre) {
+                return;
+            }
+
+            // Deshabilitar botón mientras envía
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'Enviando...';
+
+            try {
+                const response = await fetch('https://formspree.io/f/xredoryd', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        personas: count,
+                        mensaje: mensaje || '(sin mensaje)'
+                    })
+                });
+
+                if (response.ok) {
+                    // Mostrar mensaje de éxito
+                    successMessage.classList.add('show');
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 3000);
+
+                    // Limpiar formulario
+                    rsvpForm.reset();
+                    count = 1;
+                    counterValue.textContent = '1';
+                } else {
+                    alert('Hubo un error al enviar. Intenta de nuevo.');
+                }
+            } catch (error) {
+                alert('Error de conexión. Verifica tu internet.');
+            }
+
+            // Restaurar botón
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Confirmar Asistencia';
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // SMOOTH SCROLL PARA EL INDICADOR
+        // ═══════════════════════════════════════════════════════════════
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            const nextSection = document.querySelector('.section');
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>
