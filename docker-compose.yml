@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  bautizo:
+    build: .
+    container_name: bautizo-asiri-emma
+    ports:
+      - "80:80"
+    restart: unless-stopped
